@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>SPIDER</title>
+        <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <style>
+          article, aside, dialog, figure, footer, header,
+          hgroup, menu, nav, section { display: block; }
+       </style>
+       
+    </head>
+    <body>
+    <canvas id="cvsMain" width="100%" height="100%"></canvas>
+    </body>
+    <script>
+	var ctx = cvsMain.getContext('2d');
+	ctx.fillStyle = '#ccc';
+	ctx.strokeStyle = 'red';
+	ctx.rect(25, 25, 100, 100);
+	ctx.fill();
+	ctx.stroke();
+
+	var image = new Image();
+	image.src = 'img/wall.jpg';
+	image.addEventListener('load', function() {
+	    ctx.drawImage(image,0,0);
+	}, false);
+    ;
+    </script>
+
+</html>

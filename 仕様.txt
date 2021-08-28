@@ -1,0 +1,6 @@
+□canvasにXXX(rect)を描画
+□XXXをマウスカーソルに移動(setInterval,getPost)
+□XXXをマウスを動かした時のみ移動
+□XXXを最大移動幅、移動反応範囲を設定
+□XXXをマウスカーソル方向に回転()
+□rectを蜘蛛オブジェクト化()
