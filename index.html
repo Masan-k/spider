@@ -13,22 +13,60 @@
        
     </head>
     <body>
-    <canvas id="cvsMain" width="100%" height="100%"></canvas>
+    <canvas id="cvsMain" width="700px" height="700px"></canvas>
     </body>
     <script>
-	var ctx = cvsMain.getContext('2d');
-	ctx.fillStyle = '#ccc';
-	ctx.strokeStyle = 'red';
-	ctx.rect(25, 25, 100, 100);
-	ctx.fill();
-	ctx.stroke();
 
-	var image = new Image();
-	image.src = 'img/wall.jpg';
-	image.addEventListener('load', function() {
-	    ctx.drawImage(image,0,0);
-	}, false);
-    ;
+var ctx = cvsMain.getContext('2d');
+let sPosX = 200;
+let sPosY = 200;
+
+fillBack();
+drawSpider(sPosX, sPosY);
+
+cvsMain.addEventListener('touchmove', touchMove);
+function touchMove(e){
+    //moving = true;
+    
+    //ctx.clearRect(0, 0,cvsMain.width, cvsMain.height);
+    //fillBack();
+    clearSpider(sPosX, sPosY);
+    
+    mPosX = e.changedTouches[0].clientX - cvsMain.getBoundingClientRect().left;
+    mPosY = e.changedTouches[0].clientY - cvsMain.getBoundingClientRect().top; 
+
+    sPosX = sPosX + (mPosX-sPosX)/5
+    sPosY = sPosY + (mPosY-sPosY)/5
+
+    drawSpider(sPosX, sPosY);
+    //console.log('mPosY -> ' + mPosY);
+
+    //e.preventDefault();
+}
+
+function drawSpider(x, y){
+    ctx.beginPath();
+    ctx.arc(x, y, 10, 0, Math.PI * 2, true); 
+    ctx.fillStyle = '#734229';
+    ctx.fill();
+
+}
+function clearSpider(x, y){
+    ctx.beginPath();
+    ctx.arc(x, y, 15, 0, Math.PI * 2, true); 
+    ctx.fillStyle = '#ccc';
+    ctx.fill();
+
+
+}
+function fillBack(){
+
+    ctx.rect(0, 0 , cvsMain.width , cvsMain.height );
+    ctx.fillStyle = '#ccc';
+    ctx.fill();
+
+}
+
     </script>
 
 </html>
