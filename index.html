@@ -9,9 +9,14 @@
         <style>
           article, aside, dialog, figure, footer, header,
           hgroup, menu, nav, section { display: block; }
+	  body{
+	      width:370px;
+	      height:660px;
+	  }
        </style>
        
     </head>
+    
     <body>
     <canvas id="cvsMain" width="300px" height="600px"></canvas>
     </body>
@@ -62,6 +67,9 @@ function clearSpider(x, y){
 }
 function fillBack(){
     ctx.rect(0, 0 , cvsMain.width , cvsMain.height );
+    console.log('cvsMain.width -> ' + cvsMain.width);
+    console.log('cvsMain.height -> ' + cvsMain.height);
+
     ctx.fillStyle = '#ccc';
     ctx.fill();
 
