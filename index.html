@@ -25,6 +25,7 @@ fillBack();
 drawSpider(sPosX, sPosY);
 
 cvsMain.addEventListener('touchmove', touchMove);
+
 function touchMove(e){
     //moving = true;
     
@@ -41,7 +42,7 @@ function touchMove(e){
     drawSpider(sPosX, sPosY);
     //console.log('mPosY -> ' + mPosY);
 
-    //e.preventDefault();
+    e.preventDefault();
 }
 
 function drawSpider(x, y){
@@ -60,7 +61,6 @@ function clearSpider(x, y){
 
 }
 function fillBack(){
-
     ctx.rect(0, 0 , cvsMain.width , cvsMain.height );
     ctx.fillStyle = '#ccc';
     ctx.fill();
