@@ -18,7 +18,7 @@
     </head>
     
     <body>
-    <canvas id="cvsMain" width="1110px" height="1980px"></canvas>
+	<canvas id="cvsMain" width="1110px" height="1980px"></canvas>
     </body>
     <script>
 
@@ -32,29 +32,35 @@ drawSpider(sPosX, sPosY);
 cvsMain.addEventListener('touchmove', touchMove);
 
 function touchMove(e){
-    //moving = true;
     
-    //ctx.clearRect(0, 0,cvsMain.width, cvsMain.height);
-    //fillBack();
     clearSpider(sPosX, sPosY);
     
     mPosX = e.changedTouches[0].clientX - cvsMain.getBoundingClientRect().left;
     mPosY = e.changedTouches[0].clientY - cvsMain.getBoundingClientRect().top; 
 
+    let beforeSPosX = sPosX
+    let beforeSPosY = sPosY
+
     sPosX = sPosX + (mPosX-sPosX)/5
     sPosY = sPosY + (mPosY-sPosY)/5
 
-    drawSpider(sPosX, sPosY);
-    //console.log('mPosY -> ' + mPosY);
+    drawSpider(sPosX, sPosY, beforeSPosX, beforeSPosY);
 
     e.preventDefault();
 }
 
-function drawSpider(x, y){
+function drawSpider(x, y, bX, bY){
     ctx.beginPath();
     ctx.arc(x, y, 10, 0, Math.PI * 2, true); 
     ctx.fillStyle = '#734229';
     ctx.fill();
+    
+    ctx.beginPath();
+    ctx.strokeStyle = '#F00';
+    ctx.lineWidth = 5;
+    ctx.moveTo(x, y);
+    ctx.lineTo(x+(x-bX), y+(y-bY));
+    ctx.stroke();
 
 }
 function clearSpider(x, y){
@@ -67,14 +73,10 @@ function clearSpider(x, y){
 }
 function fillBack(){
     ctx.rect(0, 0 , 1110, 1980 );
-    //console.log('cvsMain.width -> ' + );
-    //console.log('cvsMain.height -> ' + cvsMain.height);
-
     ctx.fillStyle = '#ccc';
     ctx.fill();
 
 }
 
     </script>
-
 </html>
