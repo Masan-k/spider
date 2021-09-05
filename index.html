@@ -23,49 +23,137 @@
     <script>
 
 var ctx = cvsMain.getContext('2d');
-let sPosX = 200;
-let sPosY = 200;
+let sPosX = 500;
+let sPosY = 500;
 
 fillBack();
 drawSpider(sPosX, sPosY);
 
 cvsMain.addEventListener('touchmove', touchMove);
 
-function touchMove(e){
+function getRandom(min, max) {
+    'use strict';
     
-    clearSpider(sPosX, sPosY);
-    
-    mPosX = e.changedTouches[0].clientX - cvsMain.getBoundingClientRect().left;
-    mPosY = e.changedTouches[0].clientY - cvsMain.getBoundingClientRect().top; 
-
-    let beforeSPosX = sPosX
-    let beforeSPosY = sPosY
-
-    sPosX = sPosX + (mPosX-sPosX)/5
-    sPosY = sPosY + (mPosY-sPosY)/5
-
-    drawSpider(sPosX, sPosY, beforeSPosX, beforeSPosY);
-
-    e.preventDefault();
+    let range = max - min + 1;
+    let random = Math.floor(Math.random() * range);
+    return random + min;
 }
 
+function touchMove(e){
+
+    if(getRandom(0,5)===0){
+   
+	
+	mPosX = e.changedTouches[0].clientX - cvsMain.getBoundingClientRect().left;
+	mPosY = e.changedTouches[0].clientY - cvsMain.getBoundingClientRect().top; 
+
+	let beforeSPosX = sPosX
+	let beforeSPosY = sPosY
+
+	sPosX = sPosX + (mPosX-sPosX)*0.7;
+	sPosY = sPosY + (mPosY-sPosY)*0.7;
+
+        //drawSpider(sPosX, sPosY, beforeSPosX, beforeSPosY);
+	//clearSpider(sPosX, sPosY);
+	//clearSpider(200, 200);
+	drawSpider(500, 500, beforeSPosX, beforeSPosY);
+
+	e.preventDefault();
+    }
+}
+
+var degree = 90;
+var beforeTheta = 0;
+
 function drawSpider(x, y, bX, bY){
+    const headSize = 5;
+    const bodySize = 10;
+    const buttSize = 7;
+    const legLen = 20;
+
+    //spider body image
+    //  . <- posX,posY
+    //-■--
+　　//-▼ -
+
+    //testCode
     ctx.beginPath();
-    ctx.arc(x, y, 10, 0, Math.PI * 2, true); 
-    ctx.fillStyle = '#734229';
+    ctx.fillStyle = '#FFF';
+    ctx.arc(50,50,50,0,Math.PI * 2, true);
     ctx.fill();
     
+    //debug code
+    ctx.beginPath();
+    ctx.strokeStyle = '#00F';
+    ctx.moveTo(x,0);
+    ctx.lineTo(x,1110);
+    ctx.stroke();
+    ctx.moveTo(0, y);
+    ctx.lineTo(1980,y);
+    ctx.stroke();
+
+    //init
+    ctx.lineWidth = 1.5;
+    ctx.fillStyle = '#734229';
+    ctx.strokeStyle = '#734229';
+
+    //body
+    ctx.beginPath();
+    ctx.rect(x - bodySize/2, y, bodySize, bodySize);
+
+    //butt
+    ctx.moveTo(x - bodySize/2,y + bodySize);
+    ctx.lineTo(x - bodySize/2 + bodySize, y + bodySize);
+    ctx.lineTo(x, y + bodySize*2);
+    ctx.fill()
+
+    //leg
+    ctx.beginPath();
+    ctx.moveTo(x - bodySize/2,y + bodySize/2);
+    ctx.lineTo(x - bodySize/2 - legLen,y + bodySize/2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x + bodySize/2,y + bodySize/2);
+    ctx.lineTo(x + bodySize/2 + legLen,y + bodySize/2);
+    ctx.stroke();
+
+    //test;
+    ///ctx.translate(300, 300);
+    //ctx.rotate(50 * Math.PI / 180 ) ;
+    //ctx.translate(-300,-300);
+    //console.log('(Math.atan2( bY - y, x - bX) -> ' + Math.atan2( bY - y, x - bX));
+    
+    console.log('kakud -> ' +  Math.atan2( bY - y, bX - x)  * 180 / Math.PI);
+
+    //ctx.rotate(-beforeTheta);
+    
+    ctx.translate(x, y+bodySize);
+    ctx.rotate(Math.atan2( bY - y, bX - x)) ;
+    ctx.translate(-x, -(y+bodySize));
+    beforeTheta = Math.atan2( bY - y, bX - x);
+
+    /*
+    ctx.beginPath();
+    ctx.rect(300,300, 200,200);
+    ctx.fillStyle = '#00F';
+    ctx.fill();
+    */
+
+    //角度;
+    /*
     ctx.beginPath();
     ctx.strokeStyle = '#F00';
     ctx.lineWidth = 5;
     ctx.moveTo(x, y);
     ctx.lineTo(x+(x-bX), y+(y-bY));
     ctx.stroke();
-
+*/
 }
+
 function clearSpider(x, y){
     ctx.beginPath();
-    ctx.arc(x, y, 15, 0, Math.PI * 2, true); 
+    ctx.arc(x, y, 40, 0, Math.PI * 2, true); 
     ctx.fillStyle = '#ccc';
     ctx.fill();
 
